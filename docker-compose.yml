@@ -1,0 +1,53 @@
+version: '3'
+
+services: 
+  main:
+    container_name: main
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    image: checker_viet_backend
+    volumes: 
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+      - 9229:9229
+    command: npm run start:dev
+    env_file: .env
+    networks:
+      - webnet
+    depends_on:
+      - redis
+      - mysql
+
+  redis:
+    container_name: redis
+    image: redis:5
+    networks:
+      - webnet
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_DATA: /var/lib/mysql/data
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3366:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - dbdata:/var/lib/mysql
+
+networks:
+  webnet:
+volumes:
+  dbdata:
