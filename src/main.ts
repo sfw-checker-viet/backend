@@ -8,7 +8,7 @@ import { AppModule } from 'src/app.module';
 
 async function bootstrap() {
   const DEV = Boolean(process.env.NODE_ENV === 'development');
-  const PORT = Number(process.env.PORT);
+  const PORT = Number(process.env.SERVER_PORT);
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: DEV });
   app.use(cookieParser());
   await app.listen(PORT, () => {
