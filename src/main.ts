@@ -10,6 +10,7 @@ async function bootstrap() {
   const DEV = Boolean(process.env.NODE_ENV === 'development');
   const PORT = Number(process.env.SERVER_PORT);
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: DEV });
+  app.setGlobalPrefix('api/v1');
   app.use(cookieParser());
   await app.listen(PORT, () => {
     Logger.log(`listening on port ${PORT}`);

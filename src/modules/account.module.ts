@@ -6,6 +6,7 @@ import { AccountEntity } from 'src/entities/account.entity';
 import { AccountResolver } from 'src/resolvers/account.resolver';
 import { AccountService } from 'src/services/account.service';
 import { JwtStrategy } from 'src/modules/auth/jwt.strategy';
+import { AuthController } from 'src/controllers/auth.controller';
 
 @Module({
   imports: [
@@ -21,5 +22,6 @@ import { JwtStrategy } from 'src/modules/auth/jwt.strategy';
   ],
   providers: [AccountService, AccountResolver, JwtStrategy],
   exports: [AccountService, PassportModule],
+  controllers: [AuthController,]
 })
 export class AccountModule {}

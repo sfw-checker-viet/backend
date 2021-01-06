@@ -51,9 +51,10 @@ export class AccountEntity {
     name: 'email',
     type: 'varchar',
     length: 80,
+    nullable: true,
   })
   @IsEmail()
-  email!: string;
+  email?: string;
 
   @Field(() => Int)
   @Column({

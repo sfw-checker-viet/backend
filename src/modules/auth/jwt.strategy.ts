@@ -18,8 +18,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     Logger.log(`jwt constructor`)
   }
 
-  async validate(username: string, password: string): Promise<any> {
-    Logger.log(`jwt validate`)
-    return this.accountService.login({username, password, email: ''});
+  async validate(payload: any): Promise<any> {
+    Logger.log(`jwt validate`);
+    return { userId: payload.sub, username: payload.username };
   }
 }
